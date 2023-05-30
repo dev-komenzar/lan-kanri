@@ -18,7 +18,7 @@
 {#if $queryResult.isLoading}
 	<p>LOADING</p>
 {:else if $queryResult.isError}
-	<p>ERROR: {$queryResult.error}</p>
+	<p>{$queryResult.error}</p>
 {:else}
 	<span>{$queryResult.data}</span>
 {/if}
