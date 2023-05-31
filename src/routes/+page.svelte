@@ -13,7 +13,7 @@
 	};
 
 	function getDevicePages(params: PageObjectResponse[]): string[] {
-		return params.reduce((previous, current, index) => {
+		return params.reduce((previous, current) => {
 			const relationProperty = current.properties['デバイス'] as RelationProps;
 			const ids = relationProperty.relation.map((value) => value.id);
 			return previous.concat(ids);
