@@ -1,14 +1,31 @@
-<script>
+<script lang="ts">
+	import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 	import { useQuery } from '@sveltestack/svelte-query';
+	import type { AxiosResponse } from 'axios';
 	import axios from 'axios';
 
+	type RelationProps = {
+		type: 'relation';
+		relation: Array<{
+			id: string;
+		}>;
+		id: string;
+	};
+
+	function getDevicePages(params: PageObjectResponse[]): string[] {
+		return params.reduce((previous, current, index) => {
+			const relationProperty = current.properties['デバイス'] as RelationProps;
+			const ids = relationProperty.relation.map((value) => value.id);
+			return previous.concat(ids);
+		}, [] as string[]);
+	}
 	const url = '/api/devices';
 	const queryResult = useQuery('devices', async () => {
-		const response = await axios.get(url).catch((error) => {
+		const response: AxiosResponse<PageObjectResponse[]> = await axios.get(url).catch((error) => {
 			throw new Error(error);
 		});
-		console.log('respones: ', response);
-		return response.data;
+		const devicePages = getDevicePages(response.data);
+		return devicePages;
 	});
 </script>
 
@@ -20,5 +37,5 @@
 {:else if $queryResult.isError}
 	<p>{$queryResult.error}</p>
 {:else}
-	<span>{$queryResult.data}</span>
+	<p>{JSON.stringify($queryResult.data)}</p>
 {/if}

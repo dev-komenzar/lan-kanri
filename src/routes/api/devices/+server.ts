@@ -25,6 +25,6 @@ export const GET = (
       console.dir(page.results);
       
 
-    return new Response(String(page.results))
+    return new Response(JSON.stringify(page.results))
   }
 ) satisfies RequestHandler

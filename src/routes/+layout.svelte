@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { QueryClientProvider } from '@sveltestack/svelte-query';
 	import { AppShell, Header, Seo, SvelteUIProvider } from '@svelteuidev/core';
 </script>
