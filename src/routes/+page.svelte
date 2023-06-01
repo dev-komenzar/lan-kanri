@@ -1,31 +1,16 @@
 <script lang="ts">
-	import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 	import { useQuery } from '@sveltestack/svelte-query';
-	import type { AxiosResponse } from 'axios';
 	import axios from 'axios';
 
-	type RelationProps = {
-		type: 'relation';
-		relation: Array<{
-			id: string;
-		}>;
-		id: string;
-	};
-
-	function getDevicePages(params: PageObjectResponse[]): string[] {
-		return params.reduce((previous, current) => {
-			const relationProperty = current.properties['デバイス'] as RelationProps;
-			const ids = relationProperty.relation.map((value) => value.id);
-			return previous.concat(ids);
-		}, [] as string[]);
-	}
 	const url = '/api/devices';
 	const queryResult = useQuery('devices', async () => {
-		const response: AxiosResponse<PageObjectResponse[]> = await axios.get(url).catch((error) => {
-			throw new Error(error);
-		});
-		const devicePages = getDevicePages(response.data);
-		return devicePages;
+		const response = await axios
+			.get<string[]>(url)
+			.then((res) => res.data)
+			.catch((error) => {
+				throw new Error(error);
+			});
+		return response;
 	});
 </script>
 
