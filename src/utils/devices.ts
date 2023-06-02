@@ -28,7 +28,6 @@ export async function getAllowedUsersAsync(database: string): Promise<PageObject
 		.catch((error) => {
 			throw new Error(error);
 		});
-	console.dir(pages.results);
 	return pages.results as PageObjectResponse[];
 }
 
