@@ -5,7 +5,9 @@
  * @param params
  */
 export function generateCode(params: string[]) {
-	const passFilters = params.map((param, index) => `ethernet filter ${index} pass-log ${param}`);
+	const passFilters = params.map(
+		(param, index) => `ethernet filter ${index + 1} pass-log ${param}`,
+	);
 	const rejectFilters = ['ethernet filter 512 reject-nolog *:*:*:*:*:*'];
 	const filters = passFilters.concat(rejectFilters);
 	return '\n' + filters.join('\n');
