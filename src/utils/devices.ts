@@ -86,7 +86,7 @@ function pickStringOnlu(params: string | null): params is string {
 	return typeof params === 'string';
 }
 
-export async function getMacAddresses(database: string, _devices: string[]): Promise<string[]> {
+export async function getMacAddresses(database: string): Promise<string[]> {
 	const allDevices = await getAllPagesAsync(database);
 	const addresses = allDevices
 		.map((device) => {
